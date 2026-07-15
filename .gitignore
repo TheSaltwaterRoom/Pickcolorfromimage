@@ -1,0 +1,34 @@
+# CMake build directories and generated files
+/build/
+/build-*/
+/cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+build.ninja
+.ninja_*
+
+# Qt Creator and local Codex metadata
+/.qtcreator/
+/.agents/
+/.codex/
+*.user
+*.user.*
+.qtc_clangd/
+.qmlls.ini
+
+# C/C++ build products
+*.obj
+*.o
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ilk
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
