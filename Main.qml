@@ -24,6 +24,8 @@ ApplicationWindow {
         fileMode: FileDialog.OpenFile
         nameFilters: [qsTr("BMP 图片 (*.bmp)")]
         onAccepted: {
+            colorHexField.clear()
+
             if (colorSampler.loadImage(selectedFile)) {
                 previewImage.source = selectedFile
             } else {
@@ -116,6 +118,8 @@ ApplicationWindow {
                     if (!color.valid)
                         return
 
+                    colorHexField.text = color.hex
+
                     console.log(
                         "Pixel:", pixelX, pixelY,
                         "RGB:", color.r, color.g, color.b,
@@ -130,10 +134,59 @@ ApplicationWindow {
             }
         }
 
-        Button {
-            text: qsTr("选择 BMP 图片")
+        RowLayout {
             Layout.alignment: Qt.AlignHCenter
-            onClicked: imageFileDialog.open()
+            spacing: 8
+
+            Label {
+                text: qsTr("HEX:")
+            }
+
+            Rectangle {
+                Layout.preferredWidth: 120
+                Layout.preferredHeight: 30
+                radius: 2
+                color: window.palette.base
+                border.color: window.palette.mid
+                border.width: 1
+
+                TextInput {
+                    id: colorHexField
+                    anchors.fill: parent
+                    anchors.margins: 4
+                    readOnly: true
+                    selectByMouse: true
+                    clip: true
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    color: window.palette.text
+                    selectionColor: window.palette.highlight
+                    selectedTextColor: window.palette.highlightedText
+                }
+
+                Text {
+                    anchors.fill: parent
+                    visible: colorHexField.text.length === 0
+                    text: qsTr("未选择颜色")
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    color: window.palette.placeholderText
+                }
+            }
+
+            Rectangle {
+                Layout.preferredWidth: 30
+                Layout.preferredHeight: 30
+                radius: 4
+                color: colorHexField.text ? colorHexField.text : "transparent"
+                border.color: "#808080"
+                border.width: 1
+            }
+
+            Button {
+                text: qsTr("选择 BMP 图片")
+                onClicked: imageFileDialog.open()
+            }
         }
     }
 }
